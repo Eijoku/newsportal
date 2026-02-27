@@ -1,0 +1,132 @@
+from django.contrib.auth.models import User
+import NewsPortal.models as models
+
+user1 = User.objects.create_user(username='Соколов Дмитрий Сергеевич')
+user2 = User.objects.create_user(username='Кузнецова Анастасия Павловна')
+user3 = User.objects.create_user(username='Новиков Артем Игоревич')
+user4 = User.objects.create_user(username='Волкова Екатерина Андреевна')
+user5 = User.objects.create_user(username='Морозов Кирилл Алексеевич')
+user6 = User.objects.create_user(username='Петрова Ольга Дмитриевна')
+user7 = User.objects.create_user(username='Зайцев Максим Владиславович')
+user8 = User.objects.create_user(username='Соловьева Анна Борисовна')
+user9 = User.objects.create_user(username='Козлов Иван Николаевич')
+user10 = User.objects.create_user(username='Лебедева Татьяна Викторовна')
+
+
+author1 = Author.objects.create(user=user1)
+author2 = Author.objects.create(user=user4)
+author3 = Author.objects.create(user=user7)
+
+categories1 = Categories.objects.create(name_categories = 'Наука и будущее')
+categories2 = Categories.objects.create(name_categories = 'Креатив и handmade')
+categories3 = Categories.objects.create(name_categories = 'Здоровье и осознанность')
+categories4 = Categories.objects.create(name_categories = 'Уроки жизни')
+
+article1 = models.Post.objects.create(
+    author=author1,
+    type_post='articles',
+    title='Будущее технологий',
+    content='Технологии развиваются с огромной скоростью. Искусственный интеллект, биотехнологии и роботизация изменяют каждый аспект нашей жизни.'
+)
+article1.categories.add(categories1, categories4)
+
+article2 = models.Post.objects.create(
+    author=author2,
+    type_post='articles',
+    title='Креатив и handmade: идеи для вдохновения',
+    content='Создание вещей вручную — это не только хобби, но и искусство. В этой статье мы разберём лучшие техники и подходы к крафту.'
+)
+article2.categories.add(categories2, categories4)
+
+news1 = models.Post.objects.create(
+    author=author3,
+    type_post='news',
+    title='Здоровье и осознанность в современном мире',
+    content='Недавние исследования показывают, что регулярная медитация и йога улучшают когнитивные функции и психоэмоциональное состояние.'
+)
+news1.categories.add(categories3)
+
+
+comment1 = models.Comment.objects.create(
+    post=article1,
+    user=user4,
+    text='Очень интересная статья! Особенно понравились идеи про искусственный интеллект.'
+)
+
+
+comment2 = models.Comment.objects.create(
+    post=article2,
+    user=user5,
+    text='Спасибо за вдохновение! Попробую сделать что-то подобное своими руками.'
+)
+
+
+comment3 = models.Comment.objects.create(
+    post=news1,
+    user=user6,
+    text='Полезная новость! Планирую добавить йогу в свою ежедневную практику.'
+)
+
+
+comment4 = models.Comment.objects.create(
+    post=article1,
+    user=user7,
+    text='Согласен, технологии развиваются слишком быстро! Нужно успевать за ними следить.'
+)
+ 
+>>> article1.like()
+>>> article1.like()
+>>> article1.like()
+>>> article1.like()
+>>> article1.like()
+>>> comment2.like()
+>>> 
+>>> comment2.like()
+>>> comment2.like()
+>>> comment2.like()
+>>> comment2.like()
+>>> comment2.like()
+>>> comment2.like()
+>>> comment2.like()
+>>> comment3.like()
+>>> comment3.like()
+>>> comment3.like()
+>>> comment3.like()
+>>> comment4.dislike()
+>>> comment4.dislike()
+>>> article2.dislike()
+>>> news1.like()
+>>> news1.like()
+>>> news1.like()
+>>> comment1.like()
+>>> comment1.like()
+
+Рейтинг сразу обновляется после того как использовали методы like и dislike
+
+best_author = Author.objects.order_by('-rating_author').values(
+    'user__username',
+    'rating_author'
+).first()
+
+print(best_author)
+
+
+best_post = Post.objects.order_by('-rating_post').select_related('author__user').first()
+
+print(
+    best_post.time_create,
+    best_post.author.user.username,
+    best_post.rating_post,
+    best_post.title,
+    best_post.preview()
+)
+
+comments = best_post.comment_set.all()
+
+for comment in comments:
+    print(
+        comment.time_create,
+        comment.user.username,
+        comment.rating_comment,
+        comment.text
+    )
