@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}Категории{% endblock %}
+
+{% block content %}
+<h2>Категории</h2>
+<ul>
+    {% for category in categories %}
+        <li><a href="{% url 'posts_by_category' category.id %}">{{ category.name_categories }}</a></li>
+    {% empty %}
+        <li>Категорий пока нет</li>
+    {% endfor %}
+</ul>
+{% endblock %}

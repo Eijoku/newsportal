@@ -13,9 +13,15 @@ class Author(models.Model):
         total_comments_on_posts = Comment.objects.filter(post__author=self).aggregate(total=Sum('rating_comment'))['total'] or 0
         self.rating_author = total_post_rating * 3 + total_comments_on_posts
         self.save()
+    
+    def __str__(self):
+        return self.user.username
 
 class Categories(models.Model):
     name_categories = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name_categories
 
 POST_CHOICES = [
     ('articles', 'статья'),
@@ -23,6 +29,7 @@ POST_CHOICES = [
 ]
 
 class Post(models.Model):
+    name = models.CharField(max_length=50)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
     type_post = models.CharField(max_length=20, choices=POST_CHOICES)
     time_create = models.DateTimeField(auto_now_add=True)
@@ -50,7 +57,8 @@ class Post(models.Model):
         self.save()
         self.author.update_rating()
 
-
+    def __str__(self):
+        return f'{self.name} {self.author} {self.content[:30]}...'
 
 
 class PostCategories(models.Model):

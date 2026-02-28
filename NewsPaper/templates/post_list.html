@@ -1,0 +1,74 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% block title %}Все посты{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        {% for post in posts %}
+        <article class="mb-5">
+            <header class="mb-2">
+                <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+                <div class="text-muted fst-italic mb-2">Автор: {{ post.author.user.username }} | {{ post.time_create|date:"d M Y H:i" }}</div>
+                {% for category in post.categories.all %}
+                    <a class="badge bg-secondary text-decoration-none link-light" href="{% url 'posts_by_category' category.id %}">{{ category.name_categories }}</a>
+                {% endfor %}
+            </header>
+            <p>{{ post.preview | censor }}</p>
+        </article>
+        {% empty %}
+        <p>Постов пока нет.</p>
+        {% endfor %}
+        <!-- Пагинация -->
+        {% if is_paginated %}
+            <nav>
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущая</a></li>
+                    {% endif %}
+                    {% for num in paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+
+    <div class="col-lg-4">
+        <!-- Категории -->
+       <div class="card mb-4">
+            <div class="card-header">Категории</div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    {% for category in categories %}
+                        <li><a href="{% url 'posts_by_category' category.id %}">{{ category.name_categories }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Лучшие авторы -->
+        <div class="card mb-4">
+            <div class="card-header">Лучшие авторы</div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    {% for author in top_authors %}
+                        <li>
+                            <a href="{% url 'author_detail' author.id %}">{{ author.user.username }}</a>
+                            — ⭐ {{ author.rating_author }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

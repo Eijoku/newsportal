@@ -1,0 +1,17 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}Посты категории {{ category.name_categories }}{% endblock %}
+
+{% block content %}
+<h2>Посты в категории: {{ category.name_categories }}</h2>
+
+{% for post in posts %}
+<article class="mb-3">
+    <h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
+    <div class="text-muted fst-italic mb-1">Автор: {{ post.author.user.username }} | {{ post.time_create|date:"d M Y H:i" }}</div>
+    <p>{{ post.preview }}</p>
+</article>
+{% empty %}
+<p>Постов в этой категории пока нет.</p>
+{% endfor %}
+{% endblock %}
