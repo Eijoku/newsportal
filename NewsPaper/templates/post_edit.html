@@ -1,0 +1,49 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+{% if view.object.pk %}Редактирование поста{% else %}Создание поста{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">
+        {% if view.object.pk %}
+            Редактировать пост
+        {% else %}
+            Создать пост
+        {% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Название -->
+        <div class="mb-3">
+            <label for="{{ form.name.id_for_label }}" class="form-label">Название поста</label>
+            {{ form.name }}
+        </div>
+
+        <!-- Контент -->
+        <div class="mb-3">
+            <label for="{{ form.content.id_for_label }}" class="form-label">Содержание</label>
+            {{ form.content }}
+        </div>
+
+        <!-- Категории -->
+        <div class="mb-3">
+            <label class="form-label">Категории</label>
+            <div>
+                {% for checkbox in form.categories %}
+                    <div class="form-check form-check-inline">
+                        {{ checkbox.tag }}
+                        <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label>
+                    </div>
+                {% endfor %}
+            </div>
+            <small class="form-text text-muted">Выберите одну или несколько категорий для поста.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+{% endblock %}

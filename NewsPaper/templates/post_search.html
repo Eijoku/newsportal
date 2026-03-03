@@ -1,0 +1,28 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}  {# сюда должен быть загружен фильтр censor #}
+
+{% block title %}Поиск новостей{% endblock %}
+
+{% block content %}
+<h1>Поиск новостей</h1>
+
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit" class="btn btn-primary">Искать</button>
+</form>
+
+<hr>
+
+<h2>Результаты поиска</h2>
+{% for post in filter.qs %}
+<article class="mb-4">
+    <h3><a href="{% url 'post_detail' post.pk %}">{{ post.name }}</a></h3>
+    <div class="text-muted">
+        Автор: {{ post.author.user.username }} | {{ post.time_create|date:"d M Y H:i" }}
+    </div>
+    <p>{{ post.preview|censor }}</p>  {# кастомный фильтр #}
+</article>
+{% empty %}
+<p>Постов не найдено.</p>
+{% endfor %}
+{% endblock %}

@@ -1,5 +1,7 @@
+# NewsPortal/urls.py
 from django.urls import path
 from .views import (
+    PostSearchView,
     PostListView,
     PostDetailView,
     AuthorDetailView,
@@ -8,7 +10,11 @@ from .views import (
     like_post,
     dislike_post,
     like_comment,
-    dislike_comment
+    dislike_comment,
+    NewsCreateView, 
+    ArticleCreateView,
+    PostUpdateView, 
+    PostDeleteView
 )
 
 urlpatterns = [
@@ -33,4 +39,16 @@ urlpatterns = [
     # Лайки/дизлайки комментариев (AJAX)
     path('comment/<int:pk>/like/', like_comment, name='like_comment'),
     path('comment/<int:pk>/dislike/', dislike_comment, name='dislike_comment'),
+    
+    path('news/search/', PostSearchView.as_view(), name='post_search'),
+    
+    # --- Новости ---
+    path('news/create/', NewsCreateView.as_view(), name='news_create'),
+    path('news/<int:pk>/edit/', PostUpdateView.as_view(), name='news_edit'),
+    path('news/<int:pk>/delete/', PostDeleteView.as_view(), name='news_delete'),
+
+    # --- Статьи ---
+    path('articles/create/', ArticleCreateView.as_view(), name='article_create'),
+    path('articles/<int:pk>/edit/', PostUpdateView.as_view(), name='article_edit'),
+    path('articles/<int:pk>/delete/', PostDeleteView.as_view(), name='article_delete'),
 ]

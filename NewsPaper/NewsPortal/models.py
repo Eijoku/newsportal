@@ -1,3 +1,4 @@
+# NewsPortal/models.py
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
@@ -34,7 +35,6 @@ class Post(models.Model):
     type_post = models.CharField(max_length=20, choices=POST_CHOICES)
     time_create = models.DateTimeField(auto_now_add=True)
     categories = models.ManyToManyField(Categories, through='PostCategories')
-    title = models.CharField(max_length=255)
     content = models.TextField()
     rating_post = models.IntegerField(default=0)
 
