@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+{% load socialaccount %}
+
+{% block title %}Регистрация{% endblock %}
+
+{% block content %}
+<h2>Регистрация</h2>
+
+{# Показываем глобальные ошибки формы #}
+{% if form.non_field_errors %}
+  <div class="alert alert-danger">
+    {{ form.non_field_errors }}
+  </div>
+{% endif %}
+
+<form method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+</form>
+
+<hr>
+
+<p>Или войдите через сторонний сервис:</p>
+<a href="{% provider_login_url 'yandex' %}" class="btn btn-outline-dark">Войти через Yandex</a>
+
+<p class="mt-3">
+  Уже есть аккаунт? <a href="{% url 'account_login' %}">Войти</a>
+</p>
+{% endblock %}

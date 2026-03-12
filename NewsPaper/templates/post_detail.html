@@ -102,6 +102,13 @@ stroke="currentColor" stroke-width="2"/>
 <strong>{{ comment.user.username }}</strong><br>
 {{ comment.text | censor }}
 
+{% if request.user.is_authenticated and request.user.id == comment.user.id %}
+<form method="post" action="{% url 'delete_comment' comment.id %}" class="d-inline ms-2">
+    {% csrf_token %}
+    <button class="btn btn-sm btn-danger" type="submit">Удалить</button>
+</form>
+{% endif %}
+
 <div class="rating-bar">
 
 <button type="button" class="rating-btn"
@@ -141,6 +148,21 @@ stroke="currentColor" stroke-width="2"/>
 </div>
 {% endfor %}
 
+<hr>
+
+{% if request.user.is_authenticated %}
+<form method="post" action="{% url "add_comment" post.id %}">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="commentText" class="form-label">Оставить комментарий</label>
+        <textarea class="form-control" id="commentText" name="text" rows="3"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Отправить</button>
+</form>
+{% else %}
+<p><a href="{% url 'account_login' %}">Войдите</a>, чтобы оставить комментарий.</p>
+{% endif %}
+
 </section>
 </article>
 
@@ -171,6 +193,7 @@ function likePost(id) {
     })
     .then(response => response.json())
     .then(data => {
+        if (data.redirect) { window.location = data.redirect; return; }
         document.getElementById(`post-rating-${id}`).innerText = data.rating;
     });
 }
@@ -184,6 +207,7 @@ function dislikePost(id) {
     })
     .then(response => response.json())
     .then(data => {
+        if (data.redirect) { window.location = data.redirect; return; }
         document.getElementById(`post-rating-${id}`).innerText = data.rating;
     });
 }
@@ -195,6 +219,7 @@ function likeComment(id) {
     })
     .then(r => r.json())
     .then(data => {
+        if (data.redirect) { window.location = data.redirect; return; }
         document.getElementById(`comment-rating-${id}`).innerText = data.rating;
     });
 }
@@ -206,6 +231,7 @@ function dislikeComment(id) {
     })
     .then(r => r.json())
     .then(data => {
+        if (data.redirect) { window.location = data.redirect; return; }
         document.getElementById(`comment-rating-${id}`).innerText = data.rating;
     });
 }

@@ -11,10 +11,13 @@ from .views import (
     dislike_post,
     like_comment,
     dislike_comment,
+    add_comment,
+    delete_comment,
     NewsCreateView, 
     ArticleCreateView,
     PostUpdateView, 
-    PostDeleteView
+    PostDeleteView,
+    become_author
 )
 
 urlpatterns = [
@@ -36,6 +39,10 @@ urlpatterns = [
     path('news/<int:pk>/like/', like_post, name='like_post'),
     path('news/<int:pk>/dislike/', dislike_post, name='dislike_post'),
 
+    # Комментарии
+    path('news/<int:pk>/comment/', add_comment, name='add_comment'),
+    path('comment/<int:pk>/delete/', delete_comment, name='delete_comment'),
+
     # Лайки/дизлайки комментариев (AJAX)
     path('comment/<int:pk>/like/', like_comment, name='like_comment'),
     path('comment/<int:pk>/dislike/', dislike_comment, name='dislike_comment'),
@@ -51,4 +58,5 @@ urlpatterns = [
     path('articles/create/', ArticleCreateView.as_view(), name='article_create'),
     path('articles/<int:pk>/edit/', PostUpdateView.as_view(), name='article_edit'),
     path('articles/<int:pk>/delete/', PostDeleteView.as_view(), name='article_delete'),
+    path('become-author/', become_author, name='become_author'),
 ]

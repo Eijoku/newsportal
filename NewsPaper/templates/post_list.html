@@ -16,7 +16,7 @@
         {% for post in posts %}
         <article class="mb-5">
             <header class="mb-2">
-                <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
+                <h2><a href="{% url 'post_detail' post.pk %}">{{ post.name }}</a></h2>
                 <div class="text-muted fst-italic mb-2">
                     Автор: {{ post.author.user.username }} | {{ post.time_create|date:"d M Y H:i" }}
                 </div>

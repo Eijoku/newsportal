@@ -1,0 +1,19 @@
+{% extends 'flatpages/default.html' %}
+{% load socialaccount %}
+
+{% block content %}
+<h2>Вход</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button>Войти</button></form>
+<p><a href="{% url 'account_signup' %}">Регистрация</a></p>
+
+<hr>
+<p>Или войдите через сторонний сервис:</p>
+
+{% get_providers as social_providers %}
+{% for prov in social_providers %}
+  {% if prov.id == 'yandex' %}
+    <a href="{% provider_login_url prov.id %}" class="btn btn-outline-dark">Войти через Yandex</a>
+  {% endif %}
+{% endfor %}
+
+{% endblock %}

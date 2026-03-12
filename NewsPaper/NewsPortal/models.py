@@ -87,6 +87,30 @@ class Comment(models.Model):
 
 
 
+class PostVote(models.Model):
+    VOTE_CHOICES = (
+        (1, 'like'),
+        (-1, 'dislike'),
+    )
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vote = models.IntegerField(choices=VOTE_CHOICES)
+
+    class Meta:
+        unique_together = ('post', 'user')
+
+
+class CommentVote(models.Model):
+    VOTE_CHOICES = (
+        (1, 'like'),
+        (-1, 'dislike'),
+    )
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='votes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    vote = models.IntegerField(choices=VOTE_CHOICES)
+
+    class Meta:
+        unique_together = ('comment', 'user')
 
 
 

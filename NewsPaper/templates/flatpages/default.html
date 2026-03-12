@@ -1,4 +1,4 @@
-{% load static %}
+{% load static group_tags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +21,37 @@
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
                     aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {# левее Home: условная кнопка #}
+                    <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        {% in_group 'authors' as is_author %}
+                        {% in_group 'common' as is_common %}
+                        {% if is_author %}
+                            <div class="nav-link dropdown">
+                                <a class="dropdown-toggle text-white" href="#" id="createDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Создать</a>
+                                <ul class="dropdown-menu" aria-labelledby="createDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'article_create' %}">Создать статью</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'news_create' %}">Создать новость</a></li>
+                                </ul>
+                            </div>
+                        {% elif is_common %}
+                            <form method="post" action="{% url 'become_author' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-light btn-sm" type="submit">Стать автором</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{% url 'become_author' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-light btn-sm" type="submit">Стать автором</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <a class="nav-link" href="{% url 'account_login' %}">Войти</a>
+                    {% endif %}
+                    </li>
+                </ul>
+
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{% url 'post_list' %}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'category_list' %}">Categories</a></li>

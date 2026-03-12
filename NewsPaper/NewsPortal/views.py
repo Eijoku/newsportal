@@ -7,6 +7,10 @@ from .forms import PostForm
 from django.http import JsonResponse
 from .filters import PostFilter
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import Group
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 # Список постов
 class PostListView(ListView):
@@ -68,30 +72,113 @@ def posts_by_category(request, category_id):
 
 def like_post(request, pk):
     if request.method == "POST":
-        post = Post.objects.get(pk=pk)
-        post.like()
+        if not request.user.is_authenticated:
+            from django.urls import reverse
+            return JsonResponse({'redirect': reverse('account_login')}, status=403)
+        post = get_object_or_404(Post, pk=pk)
+        from .models import PostVote
+        pv, created = PostVote.objects.get_or_create(post=post, user=request.user, defaults={'vote': 1})
+        if created:
+            # новый лайк поставлен
+            pass
+        else:
+            # повторный клик по лайку снимает его
+            if pv.vote == 1:
+                pv.delete()
+            else:
+                pv.vote = 1
+                pv.save()
+        # recompute rating
+        likes = PostVote.objects.filter(post=post, vote=1).count()
+        dislikes = PostVote.objects.filter(post=post, vote=-1).count()
+        post.rating_post = likes - dislikes
+        post.save()
+        post.author.update_rating()
         return JsonResponse({"rating": post.rating_post})
 
 def dislike_post(request, pk):
     if request.method == "POST":
-        post = Post.objects.get(pk=pk)
-        post.dislike()
+        if not request.user.is_authenticated:
+            from django.urls import reverse
+            return JsonResponse({'redirect': reverse('account_login')}, status=403)
+        post = get_object_or_404(Post, pk=pk)
+        from .models import PostVote
+        pv, created = PostVote.objects.get_or_create(post=post, user=request.user, defaults={'vote': -1})
+        if created:
+            # новый дизлайк поставлен
+            pass
+        else:
+            # повторный клик по дизлайку снимает его
+            if pv.vote == -1:
+                pv.delete()
+            else:
+                pv.vote = -1
+                pv.save()
+        # recompute rating
+        likes = PostVote.objects.filter(post=post, vote=1).count()
+        dislikes = PostVote.objects.filter(post=post, vote=-1).count()
+        post.rating_post = likes - dislikes
+        post.save()
+        post.author.update_rating()
         return JsonResponse({"rating": post.rating_post})
 
 
 def like_comment(request, pk):
     if request.method == "POST":
-        comment = Comment.objects.get(pk=pk)
-        comment.like()
+        if not request.user.is_authenticated:
+            from django.urls import reverse
+            return JsonResponse({'redirect': reverse('account_login')}, status=403)
+        comment = get_object_or_404(Comment, pk=pk)
+        from .models import CommentVote
+        cv, created = CommentVote.objects.get_or_create(comment=comment, user=request.user, defaults={'vote': 1})
+        if created:
+            pass
+        else:
+            if cv.vote == 1:
+                cv.delete()
+            else:
+                cv.vote = 1
+                cv.save()
+        likes = CommentVote.objects.filter(comment=comment, vote=1).count()
+        dislikes = CommentVote.objects.filter(comment=comment, vote=-1).count()
+        comment.rating_comment = likes - dislikes
+        comment.save()
+        comment.post.author.update_rating()
         return JsonResponse({"rating": comment.rating_comment})
 
 
 def dislike_comment(request, pk):
     if request.method == "POST":
-        comment = Comment.objects.get(pk=pk)
-        comment.dislike()
+        if not request.user.is_authenticated:
+            from django.urls import reverse
+            return JsonResponse({'redirect': reverse('account_login')}, status=403)
+        comment = get_object_or_404(Comment, pk=pk)
+        from .models import CommentVote
+        cv, created = CommentVote.objects.get_or_create(comment=comment, user=request.user, defaults={'vote': -1})
+        if created:
+            pass
+        else:
+            if cv.vote == -1:
+                cv.delete()
+            else:
+                cv.vote = -1
+                cv.save()
+        likes = CommentVote.objects.filter(comment=comment, vote=1).count()
+        dislikes = CommentVote.objects.filter(comment=comment, vote=-1).count()
+        comment.rating_comment = likes - dislikes
+        comment.save()
+        comment.post.author.update_rating()
         return JsonResponse({"rating": comment.rating_comment})
-    
+
+@login_required
+def become_author(request):
+    if request.method == 'POST' or request.method == 'GET':
+        authors, _ = Group.objects.get_or_create(name='authors')
+        request.user.groups.add(authors)
+        # ensure Author object exists for this user
+        from .models import Author
+        Author.objects.get_or_create(user=request.user)
+    return redirect('post_list')
 
 class PostSearchView(ListView):
     model = Post
@@ -110,7 +197,7 @@ class PostSearchView(ListView):
     
 
 # --- Создание новости ---
-class NewsCreateView(CreateView):
+class NewsCreateView(UserPassesTestMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'post_edit.html'  # используем один шаблон
@@ -119,10 +206,15 @@ class NewsCreateView(CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.type_post = 'news'  # правильное имя поля
-        post.author = self.request.user.author  # присваиваем автора
+        from .models import Author
+        author_obj, _ = Author.objects.get_or_create(user=self.request.user)
+        post.author = author_obj  # присваиваем автора
         post.save()
         form.save_m2m()
         return super().form_valid(form)
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='authors').exists()
 
 # --- Создание статьи ---
 class ArticleCreateView(CreateView):
@@ -134,7 +226,9 @@ class ArticleCreateView(CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         post.type_post = 'articles'  # правильное имя поля
-        post.author = self.request.user.author
+        from .models import Author
+        author_obj, _ = Author.objects.get_or_create(user=self.request.user)
+        post.author = author_obj
         post.save()
         form.save_m2m()
         return super().form_valid(form)
@@ -151,3 +245,37 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('post_list')
+
+
+class ProfileEditView(LoginRequiredMixin, UpdateView):
+    login_url = '/accounts/login/'
+    # остальная реализация
+
+@login_required
+def become_author(request):
+    # Если хотите разрешать GET, уберите проверку на метод
+    if request.method == 'POST' or request.method == 'GET':
+        authors, _ = Group.objects.get_or_create(name='authors')
+        request.user.groups.add(authors)
+    return redirect('post_list')
+
+
+@login_required
+@require_POST
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    text = request.POST.get('text', '').strip()
+    if text:
+        Comment.objects.create(post=post, user=request.user, text=text)
+    return redirect('post_detail', pk=pk)
+
+
+@login_required
+@require_POST
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if comment.user == request.user:
+        post_pk = comment.post.pk
+        comment.delete()
+        return redirect('post_detail', pk=post_pk)
+    return redirect('post_list')
