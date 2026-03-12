@@ -1,7 +1,7 @@
 # NewsPortal/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Categories, Comment, Author
+from .models import Post, Categories, Comment, Author, CategorySubscription
 from django.db.models import Count
 from .forms import PostForm
 from django.http import JsonResponse
@@ -11,6 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 # Список постов
 class PostListView(ListView):
@@ -68,7 +69,32 @@ class AuthorDetailView(ListView):
 def posts_by_category(request, category_id):
     category = get_object_or_404(Categories, id=category_id)
     posts = Post.objects.filter(categories=category).order_by('-time_create')
-    return render(request, 'posts_by_category.html', {'category': category, 'posts': posts})
+    is_subscribed = False
+    if request.user.is_authenticated:
+        is_subscribed = CategorySubscription.objects.filter(category=category, user=request.user).exists()
+    return render(request, 'posts_by_category.html', {
+        'category': category,
+        'posts': posts,
+        'is_subscribed': is_subscribed,
+    })
+
+
+@login_required
+@require_POST
+def subscribe_category(request, category_id):
+    category = get_object_or_404(Categories, id=category_id)
+    CategorySubscription.objects.get_or_create(category=category, user=request.user)
+    messages.success(request, f'Вы подписались на категорию {category.name_categories}.')
+    return redirect('posts_by_category', category_id=category_id)
+
+
+@login_required
+@require_POST
+def unsubscribe_category(request, category_id):
+    category = get_object_or_404(Categories, id=category_id)
+    CategorySubscription.objects.filter(category=category, user=request.user).delete()
+    messages.success(request, f'Подписка на категорию {category.name_categories} отменена.')
+    return redirect('posts_by_category', category_id=category_id)
 
 def like_post(request, pk):
     if request.method == "POST":

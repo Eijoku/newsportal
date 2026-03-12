@@ -24,6 +24,19 @@ class Categories(models.Model):
     def __str__(self):
         return self.name_categories
 
+
+class CategorySubscription(models.Model):
+    """Подписка пользователя на категорию для уведомлений."""
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name='subscriptions')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='category_subscriptions')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('category', 'user')
+
+    def __str__(self):
+        return f"{self.user.username} -> {self.category.name_categories}"
+
 POST_CHOICES = [
     ('articles', 'статья'),
     ('news', 'новость'),
@@ -111,6 +124,5 @@ class CommentVote(models.Model):
 
     class Meta:
         unique_together = ('comment', 'user')
-
 
 

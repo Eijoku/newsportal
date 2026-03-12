@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Author, Categories, Post, PostCategories, Comment
+from .models import Author, Categories, Post, PostCategories, Comment, CategorySubscription
 
 # ----------------------
 # Author
@@ -16,6 +16,13 @@ class AuthorAdmin(admin.ModelAdmin):
 class CategoriesAdmin(admin.ModelAdmin):
     list_display = ('name_categories',)
     search_fields = ('name_categories',)
+
+
+@admin.register(CategorySubscription)
+class CategorySubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('category', 'user', 'created_at')
+    list_filter = ('category',)
+    search_fields = ('category__name_categories', 'user__username')
 
 # ----------------------
 # Inline для PostCategories

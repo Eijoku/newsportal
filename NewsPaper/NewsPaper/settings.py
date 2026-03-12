@@ -12,9 +12,27 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+from typing import Dict
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _load_email_env(path: Path) -> Dict[str, str]:
+    """
+    Подгружаем пары KEY=VALUE из текстового файла без зависимостей.
+    Игнорируем пустые строки и комментарии (# ...).
+    """
+    data: Dict[str, str] = {}
+    if not path.exists():
+        return data
+    for line in path.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith('#') or '=' not in line:
+            continue
+        key, val = line.split('=', 1)
+        data[key.strip()] = val.strip()
+    return data
 
 
 # Quick-start development settings - unsuitable for production
@@ -150,3 +168,13 @@ LOGIN_REDIRECT_URL = '/news/'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = False
+
+# Email delivery (Yandex SMTP)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+_email_env = _load_email_env(BASE_DIR.parent / '.email.env')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') or _email_env.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') or _email_env.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or 'no-reply@newsportal.local'

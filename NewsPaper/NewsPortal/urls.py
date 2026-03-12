@@ -7,6 +7,8 @@ from .views import (
     AuthorDetailView,
     CategoryListView,
     posts_by_category,
+    subscribe_category,
+    unsubscribe_category,
     like_post,
     dislike_post,
     like_comment,
@@ -34,6 +36,8 @@ urlpatterns = [
 
     # Посты по категории
     path('categories/<int:category_id>/', posts_by_category, name='posts_by_category'),
+    path('categories/<int:category_id>/subscribe/', subscribe_category, name='subscribe_category'),
+    path('categories/<int:category_id>/unsubscribe/', unsubscribe_category, name='unsubscribe_category'),
 
     # Лайки/дизлайки поста (AJAX)
     path('news/<int:pk>/like/', like_post, name='like_post'),
