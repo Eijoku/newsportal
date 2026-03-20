@@ -12,11 +12,20 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import logging
 from typing import Dict
 from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def _below_warning(record: logging.LogRecord) -> bool:
+    return record.levelno < logging.WARNING
+
+
+def _warning_only(record: logging.LogRecord) -> bool:
+    return logging.WARNING <= record.levelno < logging.ERROR
 
 
 def _load_email_env(path: Path) -> Dict[str, str]:
@@ -179,6 +188,7 @@ _email_env = _load_email_env(BASE_DIR.parent / '.email.env')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') or _email_env.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') or _email_env.get('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER or 'no-reply@newsportal.local'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Celery / Redis
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://127.0.0.1:6379/0')
@@ -194,3 +204,130 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': crontab(hour=8, minute=0, day_of_week='monday'),
     },
 }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'below_warning': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': _below_warning,
+        },
+        'warning_only': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': _warning_only,
+        },
+    },
+    'formatters': {
+        'console_basic': {
+            'format': '%(asctime)s [%(levelname)s] %(message)s',
+        },
+        'console_path': {
+            'format': '%(asctime)s [%(levelname)s] %(pathname)s: %(message)s',
+        },
+        'console_path_exc': {
+            'format': '%(asctime)s [%(levelname)s] %(pathname)s: %(message)s\n%(exc_info)s',
+        },
+        'general_file': {
+            'format': '%(asctime)s [%(levelname)s] %(module)s: %(message)s',
+        },
+        'errors_file': {
+            'format': '%(asctime)s [%(levelname)s] %(pathname)s: %(message)s\n%(exc_info)s',
+        },
+        'errors_no_exc': {
+            'format': '%(asctime)s [%(levelname)s] %(pathname)s: %(message)s',
+        },
+        'security_file': {
+            'format': '%(asctime)s [%(levelname)s] %(module)s: %(message)s',
+        },
+    },
+    'handlers': {
+        'console_debug': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true', 'below_warning'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_basic',
+        },
+        'console_warning': {
+            'level': 'WARNING',
+            'filters': ['require_debug_true', 'warning_only'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_path',
+        },
+        'console_error': {
+            'level': 'ERROR',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'console_path_exc',
+        },
+        'general_file': {
+            'level': 'INFO',
+            'filters': ['require_debug_false'],
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'general.log'),
+            'formatter': 'general_file',
+        },
+        'errors_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'errors.log'),
+            'formatter': 'errors_file',
+        },
+        'security_file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'security.log'),
+            'formatter': 'security_file',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'errors_no_exc',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console_debug', 'console_warning', 'console_error', 'general_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['errors_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.server': {
+            'handlers': ['errors_file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.template': {
+            'handlers': ['errors_file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.db.backends': {
+            'handlers': ['errors_file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.security': {
+            'handlers': ['security_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+    'root': {
+        'handlers': ['console_debug', 'console_warning', 'console_error', 'general_file'],
+        'level': 'DEBUG',
+    },
+}
+
+ADMINS = [('Admin', 'kostyak03@gmail.com')]

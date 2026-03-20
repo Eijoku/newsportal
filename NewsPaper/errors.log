@@ -1,0 +1,93 @@
+2026-03-16 15:48:16,226 [ERROR] <console>: probe error
+(None, None, None)
+NoneType: None
+2026-03-20 10:52:10,802 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: Internal Server Error: /crash/
+(<class 'ZeroDivisionError'>, ZeroDivisionError('division by zero'), <traceback object at 0x71a351bec080>)
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:52:15,877 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: "GET /crash/ HTTP/1.1" 500 145
+None
+2026-03-20 10:53:48,108 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: Internal Server Error: /crash/
+(<class 'ZeroDivisionError'>, ZeroDivisionError('division by zero'), <traceback object at 0x75c93c42b680>)
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:53:50,215 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: "GET /crash/ HTTP/1.1" 500 145
+None
+2026-03-20 10:54:35,450 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: Internal Server Error: /crash/
+(<class 'ZeroDivisionError'>, ZeroDivisionError('division by zero'), <traceback object at 0x7695901eaec0>)
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:54:37,473 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: "GET /crash/ HTTP/1.1" 500 145
+None
+2026-03-20 11:01:22,053 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: Internal Server Error: /crash/
+(<class 'ZeroDivisionError'>, ZeroDivisionError('division by zero'), <traceback object at 0x78d0724824c0>)
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:01:25,024 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: "GET /crash/ HTTP/1.1" 500 145
+None
+2026-03-20 11:06:26,673 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: Internal Server Error: /crash/
+(<class 'ZeroDivisionError'>, ZeroDivisionError('division by zero'), <traceback object at 0x722cf7083980>)
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:06:29,253 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: "GET /crash/ HTTP/1.1" 500 145
+None
+2026-03-20 11:09:01,794 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: Internal Server Error: /crash/
+(<class 'ZeroDivisionError'>, ZeroDivisionError('division by zero'), <traceback object at 0x7085ec3a8d40>)
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:09:05,155 [ERROR] /home/eijoku/.local/lib/python3.12/site-packages/django/utils/log.py: "GET /crash/ HTTP/1.1" 500 145
+None

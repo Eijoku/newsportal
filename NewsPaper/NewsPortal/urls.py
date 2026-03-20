@@ -23,6 +23,9 @@ from .views import (
 )
 
 urlpatterns = [
+    # Корень ведём на список новостей
+    path('', PostListView.as_view(), name='home'),
+
     # Главная страница с постами
     path('news/', PostListView.as_view(), name='post_list'),
 

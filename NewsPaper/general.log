@@ -1,0 +1,184 @@
+2026-03-20 10:51:27,874 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:51:27,874 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:51:45,199 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:51:45,199 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:52:10,802 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:52:10,802 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:52:15,877 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 10:52:15,877 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 10:53:22,804 [INFO] autoreload: /home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/settings.py changed, reloading.
+2026-03-20 10:53:22,804 [INFO] autoreload: /home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/settings.py changed, reloading.
+2026-03-20 10:53:23,607 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:53:23,607 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:53:48,108 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:53:48,108 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:53:50,215 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 10:53:50,215 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 10:54:17,868 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:54:17,868 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 10:54:35,450 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:54:35,450 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 10:54:37,473 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 10:54:37,473 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:01:13,869 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:01:13,869 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:01:22,053 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:01:22,053 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:01:25,024 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:01:25,024 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:02:42,918 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:02:42,918 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:05:44,977 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:05:44,977 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:06:26,673 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:06:26,673 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:06:29,253 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:06:29,253 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:07:46,499 [INFO] autoreload: /home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/settings.py changed, reloading.
+2026-03-20 11:07:46,499 [INFO] autoreload: /home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/settings.py changed, reloading.
+2026-03-20 11:07:47,390 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:07:47,390 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:08:52,141 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:08:52,141 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:09:01,794 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:09:01,794 [ERROR] log: Internal Server Error: /crash/
+Traceback (most recent call last):
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/.local/lib/python3.12/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eijoku/Study/SF/newspd/NewsPaper/NewsPaper/urls.py", line 7, in crash
+    1 / 0  # ZeroDivisionError
+    ~~^~~
+ZeroDivisionError: division by zero
+2026-03-20 11:09:05,155 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:09:05,155 [ERROR] log: "GET /crash/ HTTP/1.1" 500 145
+2026-03-20 11:10:29,867 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:10:29,867 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:11:01,247 [INFO] autoreload: /home/eijoku/Study/SF/newspd/NewsPaper/NewsPortal/urls.py changed, reloading.
+2026-03-20 11:11:01,247 [INFO] autoreload: /home/eijoku/Study/SF/newspd/NewsPaper/NewsPortal/urls.py changed, reloading.
+2026-03-20 11:11:02,175 [INFO] autoreload: Watching for file changes with StatReloader
+2026-03-20 11:11:02,175 [INFO] autoreload: Watching for file changes with StatReloader
